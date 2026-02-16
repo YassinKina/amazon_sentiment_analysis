@@ -1,0 +1,48 @@
+# --- 1. Python & Mac System Files ---
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+.pkl
+src/__pycache__/
+tests/__pycache__/
+
+# --- 2. Virtual Environments ---
+env/
+venv/
+.venv/
+.conda/
+
+# --- 3. Jupyter Notebooks ---
+.ipynb_checkpoints/
+
+# --- 4. Project Data  ---
+data/
+*.json
+*.csv
+*.parquet
+*.jsonl
+*.gz
+checkpoints/
+
+# --- 5. Model Checkpoints & Artifacts  ---
+amazon_roberta_finetuned/
+roberta-base-amazon-finetuned/
+
+final_amazon_model/
+results/
+runs/
+*.bin
+*.pt
+*.pth
+
+# --- 6. IDE Settings ---
+.vscode/
+.idea/
+
+# --- 7. Streamlit ---
+
+.streamlit/
+
+# --- 8. Environment Variables ---
+.env
