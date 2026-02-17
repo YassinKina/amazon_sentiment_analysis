@@ -1,16 +1,19 @@
+from transformers import AutoModelForSequenceClassification
+from src.constants import ROBERTA_BASE
 from src.data_utils import get_final_ds
+from src.tokenize import tokenize
 
 
 def main():
-    # Get dataset
+    # Get final split dataset
     dataset = get_final_ds()
-    print(dataset)
-    # Split dataset
+    tokenized_dataset = tokenize(dataset)
+    model = AutoModelForSequenceClassification.from_pretrained(ROBERTA_BASE)
+    fine_tune_model(model, tokenized_dataset)
+ 
+   
     
-    # print(dataset["train"][0])
-    # print(dataset["validation"][0])
-    # print(dataset["test"][0])
-    
+  
     
 if __name__ == "__main__":
     main()
