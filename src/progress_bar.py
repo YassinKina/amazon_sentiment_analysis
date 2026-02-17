@@ -16,7 +16,7 @@ class NestedProgressBar:
         total_batches,
         g_epochs=None,
         g_batches=None,
-        use_notebook=True,
+        use_notebook=False,
         epoch_message_freq=None,
         batch_message_freq=None,
         mode="train",

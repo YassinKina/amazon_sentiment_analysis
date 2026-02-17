@@ -21,5 +21,6 @@ class WeightedTrainer(Trainer):
         if self.nested_bar:
             self._batch_counter += 1
             self.nested_bar.update_batch(self._batch_counter)
-
+            
+            
         return (loss, outputs) if return_outputs else loss

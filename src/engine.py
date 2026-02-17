@@ -5,6 +5,7 @@ import torch
 import numpy as np
 import os
 import yaml
+import wandb
 from .constants import CONFIG_PATH, MODEL_OUTPUT_PATH, NUM_CLASSES
 from .weighted_trainer import WeightedTrainer
 from .progress_bar import NestedProgressBar
@@ -16,6 +17,8 @@ from transformers import (AutoModelForSequenceClassification,
 
 
 def start_fine_tuning(model: AutoModelForSequenceClassification, tokenizer: AutoTokenizer, tokenized_dataset: DatasetDict):
+    wandb.init(project="customer_sentiment_analysis")
+    
     # Set model to best option available
     device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
     print(f"Training model on device: {device}")
@@ -32,6 +35,7 @@ def start_fine_tuning(model: AutoModelForSequenceClassification, tokenizer: Auto
     nested_bar = NestedProgressBar(
         total_epochs=num_epochs,
         total_batches=num_batches,
+        epoch_message_freq=1,
         mode="train"
     )
     
@@ -45,20 +49,20 @@ def start_fine_tuning(model: AutoModelForSequenceClassification, tokenizer: Auto
         data_collator=data_collator,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
         class_weights=class_weights, # predicting rare classes matters more
-        nested_bar=nested_bar
+        nested_bar=nested_bar,
+       
 )
     
     # Fine tune model
     trainer.nested_bar = nested_bar
     trainer.train()
-    nested_bar.close("Training finished.")
+    nested_bar.close("Training complete.\n")
     
     trainer.save_model(MODEL_OUTPUT_PATH)
     tokenizer.save_pretrained(MODEL_OUTPUT_PATH)
     
-    metrics = trainer.evaluate()
-    print("Final Evaluation:", metrics)
-    print(metrics)
+    trainer.evaluate()
+    
 
 def get_training_arguments():
     # Get training hyperparams from config.yaml
@@ -76,7 +80,7 @@ def get_training_arguments():
         per_device_eval_batch_size=cfg["eval_batch_size"],
         gradient_accumulation_steps=cfg["gradient_accumulation_steps"],
         learning_rate=cfg["learning_rate"],
-
+        
         eval_strategy="steps",
         save_strategy="steps",
         logging_strategy="steps",
@@ -84,17 +88,20 @@ def get_training_arguments():
         eval_steps=cfg["eval_steps"],
         save_steps=cfg["save_steps"],
         logging_steps=cfg["logging_steps"],
-
         save_total_limit=cfg["save_total_limit"],
+        
         load_best_model_at_end=True,
         metric_for_best_model="f1",
         greater_is_better=True,
-
+        
         bf16=False,
         fp16=False,
-        dataloader_num_workers=0,
-
+        
         seed=42,
+        dataloader_pin_memory=False, # silence mps warning
+        #WandB for reporting and tracking
+        report_to="wandb",
+        run_name="roberta_stable_run"
     )
     return training_args
 
