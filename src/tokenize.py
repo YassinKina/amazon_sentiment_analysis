@@ -5,20 +5,21 @@ from transformers import AutoTokenizer
 
 def tokenize(dataset: DatasetDict) -> DatasetDict:
     """This function takes in a dataset of customer reviews and returns a tokenized 
-    version of that dataset.
+    version of that dataset along with the tokenizer.
 
     Args:
         dataset (DatasetDict): A dataset of customer reviews to be tokeknized.
 
     Returns:
         DatasetDict: The tokenized customer reviews dataset.
+        AutoTokenizer: The tokenizer used to tokenize the customer reviews.
     """
     print("Tokenzing dataset...")
     
     tokenizer = AutoTokenizer.from_pretrained(ROBERTA_BASE)
     tokenized_data = dataset.map(process_data, batched=True, fn_kwargs={"tokenizer": tokenizer})
     tokenized_data.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
-    return tokenized_data
+    return tokenized_data, tokenizer
 
 def process_data(examples: DatasetDict, tokenizer: AutoTokenizer) -> BatchEncoding:
     """

@@ -26,11 +26,9 @@ data/
 *.gz
 checkpoints/
 
-# --- 5. Model Checkpoints & Artifacts  ---
-amazon_roberta_finetuned/
-roberta-base-amazon-finetuned/
-
-final_amazon_model/
+# --- 5. Model ---
+models/
+wandb/
 results/
 runs/
 *.bin
