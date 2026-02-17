@@ -64,7 +64,7 @@ def test_download_data_downloads_new(mock_json_dumps, mock_file, mock_load, mock
 @patch("src.data_utils.os.path.exists")
 @patch("src.data_utils.os.makedirs") 
 @patch("src.data_utils.load_dataset")
-@patch("src.data_utils.open", new_callable=mock_open) # ensure data remains unchanged
+@patch("src.data_utils.open", new_callable=mock_open) # ensure data remains unchanged in data/dataset
 @patch("src.data_utils.json.dumps")
 def test_download_data_default_samples(mock_json, mock_file, mock_load, mock_makedirs, mock_exists):
     """Verify the default num_samples logic without wiping real files."""

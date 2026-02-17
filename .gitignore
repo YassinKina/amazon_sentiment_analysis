@@ -6,6 +6,7 @@ __pycache__/
 .pkl
 src/__pycache__/
 tests/__pycache__/
+.pytest_cache/
 
 # --- 2. Virtual Environments ---
 env/

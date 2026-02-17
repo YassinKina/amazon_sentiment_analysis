@@ -1,6 +1,10 @@
 import os
+#________ Constants and paths used throughout the project _______
 
-DATA_DIR = os.path.join("data")
+# Ensure that data is downloaded in current directory
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 DATASET_PATH = os.path.join(DATA_DIR, "datasets")
 DATA_URL = "https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023/resolve/main/raw/review_categories/All_Beauty.jsonl"
 RANDOM_SEED = 20
