@@ -1,0 +1,13 @@
+torch>=2.0.0
+transformers
+datasets
+scikit-learn
+wandb
+pyyaml
+numpy
+accelerate
+tqdm
+pytest
+streamlit
+pandas
+plotly
