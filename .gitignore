@@ -29,6 +29,7 @@ checkpoints/
 # --- 5. Model ---
 models/
 wandb/
+notebooks/wandb/
 results/
 runs/
 *.bin

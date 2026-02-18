@@ -2,8 +2,9 @@ from transformers.tokenization_utils_base import BatchEncoding
 from datasets import DatasetDict
 from .constants import ROBERTA_BASE
 from transformers import AutoTokenizer
+from typing import Tuple
 
-def tokenize(dataset: DatasetDict) -> DatasetDict:
+def tokenize(dataset: DatasetDict) -> Tuple[DatasetDict, AutoTokenizer]:
     """This function takes in a dataset of customer reviews and returns a tokenized 
     version of that dataset along with the tokenizer.
 

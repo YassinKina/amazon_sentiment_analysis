@@ -6,7 +6,7 @@ import numpy as np
 import os
 import yaml
 import wandb
-from .constants import CONFIG_PATH, MODEL_OUTPUT_PATH, NUM_CLASSES
+from .constants import CONFIG_PATH, MODEL_OUTPUT_PATH, NUM_CLASSES, RANDOM_SEED
 from .weighted_trainer import WeightedTrainer
 from .progress_bar import NestedProgressBar
 from transformers import (AutoModelForSequenceClassification,
@@ -97,7 +97,7 @@ def get_training_arguments():
         bf16=False,
         fp16=False,
         
-        seed=42,
+        seed=RANDOM_SEED,
         dataloader_pin_memory=False, # silence mps warning
         #WandB for reporting and tracking
         report_to="wandb",
