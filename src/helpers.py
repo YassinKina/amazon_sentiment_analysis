@@ -3,7 +3,7 @@ import pandas as pd
 import torch
 import os
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from .constants import MODEL_OUTPUT_PATH, ROBERTA_BASE
+from .constants import HF_MODEL
 
 
 
@@ -37,11 +37,11 @@ def load_model() ->tuple[AutoTokenizer,AutoModelForSequenceClassification]:
 
     """
 
-    model_path = os.path.join(MODEL_OUTPUT_PATH, "checkpoint-200")
+   
 
     try:
-        tokenizer = AutoTokenizer.from_pretrained(ROBERTA_BASE)
-        model = AutoModelForSequenceClassification.from_pretrained(model_path)
+        tokenizer = AutoTokenizer.from_pretrained(HF_MODEL)
+        model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL)
         return tokenizer, model
     except OSError:
         return None, None

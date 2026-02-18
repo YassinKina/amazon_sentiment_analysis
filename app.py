@@ -23,7 +23,7 @@ with tab1:
     # We moved the logic that was at the bottom of your file INTO here
     if model is None:
         st.error(
-            "❌ Model not found! Please ensure the path './roberta-base-amazon-finetuned/checkpoint-1875' is correct.")
+            "❌ Model not found! Please ensure the path '/models/checkpoint-200' is correct.")
     else:
         user_input = st.text_area("Paste a review here:", height=150,
                                   placeholder="Example: The battery life is amazing, but the screen scratches too easily.")
@@ -82,18 +82,17 @@ with tab2:
                 # Run the heavy analysis
                 df = analyze_csv(uploaded_file, model, tokenizer)
 
-                # Save to Session State (The "Memory")
+                # Save to Session State
                 st.session_state['results_df'] = df
                 st.success("Analysis Complete!")
 
     # 2. DASHBOARD DISPLAY LOGIC
-    # Check if data exists in memory (even if button wasn't just clicked)
     if 'results_df' in st.session_state and st.session_state['results_df'] is not None:
         results_df = st.session_state['results_df']
 
         # --- DASHBOARD SECTION ---
 
-        # 1. High-Level Metrics
+        # High-Level Metrics
         avg_rating = results_df["Predicted_Sentiment"].mean()
         total_reviews = len(results_df)
         pct_negative = (len(results_df[results_df["Predicted_Sentiment"] <= 2]) / total_reviews) * 100
@@ -105,7 +104,7 @@ with tab2:
 
         st.divider()
 
-        # 2. Strategic Advice Logic
+        # Strategic Advice Logic
         st.subheader("💡 Brand Strategy Recommendation")
         if avg_rating >= 4.5:
             st.success("Status: Market Leader. Customers are delighted.")
@@ -118,7 +117,7 @@ with tab2:
 
         st.divider()
 
-        # 3. Visuals
+        #  Visuals
         st.subheader("Sentiment Distribution")
         sentiment_counts = results_df["Predicted_Sentiment"].value_counts().sort_index()
 
@@ -128,7 +127,7 @@ with tab2:
         })
         st.bar_chart(bar_chart_data.set_index("Stars"))
 
-        # 4. Deep Dive (THIS WILL NOW WORK)
+        # 4. Deep Dive 
         st.subheader("🔍 Voice of the Customer")
 
         # Changing this box triggers a rerun, but 'results_df' is safe in session_state!
