@@ -38,8 +38,8 @@ def load_model() ->tuple[AutoTokenizer,AutoModelForSequenceClassification]:
     """
 
     try:
-        tokenizer = AutoTokenizer.from_pretrained(HF_MODEL)
-        model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL)
+        tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_NAME)
+        model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_NAME)
         return tokenizer, model
     except OSError:
         return None, None
