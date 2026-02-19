@@ -30,10 +30,6 @@ def analyze_review(text, tokenizer, model):
     return star_rating, confidence, probs_list
 
 
-
-
-
-
 @st.cache_resource
 def load_model() ->tuple[AutoTokenizer,AutoModelForSequenceClassification]:
     """

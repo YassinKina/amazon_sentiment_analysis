@@ -1,6 +1,5 @@
 # Customer Review Sentiment Analysis with RoBERTa
 
-
 ![HuggingFace](https://img.shields.io/badge/HuggingFace-Transformers-yellow)
 ![WandB](https://img.shields.io/badge/Experiment_Tracking-WandB-gold)
 ![Streamlit](https://img.shields.io/badge/App-Streamlit-red)
@@ -10,7 +9,11 @@
 
 This project implements an end-to-end Machine Learning pipeline to fine-tune a **RoBERTa** transformer model for multi-class sentiment analysis on customer reviews. There is also an interactive **Streamlit** dashboard for model inference.
 
- This project focuses on production-grade engineering practices, including handling **class imbalance** via custom loss functions, integrating **MLOps** tools for experiment tracking, and ensuring code reliability through **unit testing**.
+This project focuses on production-grade engineering practices, including handling **class imbalance** via custom loss functions, integrating **MLOps** tools for experiment tracking, and ensuring code reliability through **unit testing**.
+
+#### Live Demo
+
+<a href="https://customersentimentanalysis.streamlit.app/" target=_blank rel="noopener noreferrer">Check out the interactive web app here!</a>
 
 ### Key Features
 
@@ -95,7 +98,7 @@ weights = compute_class_weight(
 
 To start the fine-tuning process:
 
-```bash 
+```bash
 python fine_tune.py
 ```
 
