@@ -23,7 +23,7 @@ with tab1:
     # We moved the logic that was at the bottom of your file INTO here
     if model is None:
         st.error(
-            "❌ Model not found! Please ensure the path '/models/checkpoint-200' is correct.")
+            "❌ Model not found!")
     else:
         user_input = st.text_area("Paste a review here:", height=150,
                                   placeholder="Example: The battery life is amazing, but the screen scratches too easily.")
