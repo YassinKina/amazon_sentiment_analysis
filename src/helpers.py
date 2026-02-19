@@ -3,7 +3,7 @@ import pandas as pd
 import torch
 import os
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from .constants import HF_MODEL
+from .constants import HF_MODEL_NAME
 
 
 

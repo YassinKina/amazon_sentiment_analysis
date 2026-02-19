@@ -12,5 +12,5 @@ MODEL_OUTPUT_PATH = os.path.join(PROJECT_ROOT, "models")
 RANDOM_SEED = 20
 NUM_CLASSES = 5
 ROBERTA_BASE = "roberta-base"
-HF_MODEL = "yassinkina/roberta-finetuned-amazon"
+HF_MODEL_NAME = "yassinkina/roberta-sentiment-analysis-ft"
        
