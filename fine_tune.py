@@ -11,7 +11,7 @@ def main():
     model = AutoModelForSequenceClassification.from_pretrained(ROBERTA_BASE, num_labels=NUM_CLASSES)
     start_fine_tuning(model, tokenizer, tokenized_dataset)
     
-    #get metricsp
+   
     
 if __name__ == "__main__":
     main()

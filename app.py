@@ -18,9 +18,9 @@ tokenizer, model = load_model()
 # Create Tabs
 tab1, tab2 = st.tabs(["🔍 Single Review", "📂 Bulk CSV Analysis"])
 
-# --- TAB 1: SINGLE REVIEW ---
+#  TAB 1: SINGLE REVIEW 
 with tab1:
-    # We moved the logic that was at the bottom of your file INTO here
+    
     if model is None:
         st.error(
             "❌ Model not found!")
@@ -47,28 +47,17 @@ with tab1:
                     else:
                         st.error(f"Confidence: {conf:.1%}")
 
+               
                 with col2:
-                    # Create DataFrame for Plotly
-                    chart_data = pd.DataFrame({
-                        "Stars": ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
+                    #  Prepare data 
+                    chart_df = pd.DataFrame({
                         "Probability": all_probs
-                    })
+                    }, index=["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"])
 
-                    fig = px.bar(
-                        chart_data,
-                        x="Stars",
-                        y="Probability",
-                        color="Probability",
-                        color_continuous_scale="Blues",
-                        range_y=[0, 1]
-                    )
-                    fig.update_layout(height=250, margin=dict(l=0, r=0, t=0, b=0))
-                    st.plotly_chart(fig, use_container_width=True)
+                    # Create bar chart
+                    st.bar_chart(chart_df, color="#1f77b4") 
 
-            else:
-                st.warning("Please enter some text first.")
-
-# --- TAB 2: BULK CSV ANALYSIS ---
+# TAB 2: BULK CSV ANALYSIS 
 with tab2:
     st.header("Upload Customer Data")
     st.write("Upload a CSV file containing a column named 'text' or 'review'.")
@@ -130,7 +119,6 @@ with tab2:
         # 4. Deep Dive 
         st.subheader("🔍 Voice of the Customer")
 
-        # Changing this box triggers a rerun, but 'results_df' is safe in session_state!
         filter_rating = st.selectbox("Filter by Rating:", [1, 2, 3, 4, 5])
 
         filtered_reviews = results_df[results_df["Predicted_Sentiment"] == filter_rating]

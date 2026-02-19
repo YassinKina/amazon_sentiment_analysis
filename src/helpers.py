@@ -3,7 +3,7 @@ import pandas as pd
 import torch
 import os
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from .constants import HF_MODEL_NAME
+from .constants import HF_MODEL_NAME, ROBERTA_BASE
 
 
 
@@ -13,19 +13,25 @@ def analyze_review(text, tokenizer, model):
 
     with torch.no_grad():
         outputs = model(**inputs)
-
+       
+    
     # Convert logits to probabilities
     probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
 
     # Get the winner
     predicted_class = torch.argmax(probabilities).item()
+    
+    probs_list = probabilities.detach().cpu().flatten().tolist()
 
     # Map 0-4 index to 1-5 Stars
     star_rating = predicted_class + 1
     confidence = probabilities[0][predicted_class].item()
 
-    # Return everything for the UI
-    return star_rating, confidence, probabilities[0].tolist()
+    return star_rating, confidence, probs_list
+
+
+
+
 
 
 @st.cache_resource
@@ -38,8 +44,9 @@ def load_model() ->tuple[AutoTokenizer,AutoModelForSequenceClassification]:
     """
 
     try:
-        tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_NAME)
+        tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_NAME, use_fast=False) 
         model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_NAME)
+       
         return tokenizer, model
     except OSError:
         return None, None
